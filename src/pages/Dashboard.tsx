@@ -12,7 +12,7 @@ import { PageHeader } from '@/components/PageHeader';
 import { DayQualityRing } from '@/components/dashboard/DayQualityRing';
 
 export default function Dashboard() {
-  const [isCompletedExpanded, setIsCompletedExpanded] = useState(true);
+  const [isCompletedExpanded, setIsCompletedExpanded] = useState(false);
   const { habits, toggleHabitCompletion } = useHabits();
   const { tasks, toggleTaskCompletion, getTodayTasks } = useTasks();
   const { transactions, toggleTransactionCompletion, getTodayTransactions } = useFinance();
