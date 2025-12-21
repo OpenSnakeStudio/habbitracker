@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Plus, Sparkles, Target, Settings } from 'lucide-react';
 import { useHabits } from '@/hooks/useHabits';
+import { useHabitNotifications } from '@/hooks/useHabitNotifications';
 import { Habit, HABIT_COLORS } from '@/types/habit';
 import { HabitCard } from '@/components/HabitCard';
 import { HabitDialog } from '@/components/HabitDialog';
@@ -39,6 +40,10 @@ export default function Habits({ openDialog, onDialogClose }: HabitsProps) {
     addCategory, updateCategory, deleteCategory,
     addTag, updateTag, deleteTag
   } = useHabits();
+  
+  // Enable habit notifications
+  useHabitNotifications(habits);
+  
   const [dialogOpen, setDialogOpen] = useState(false);
   const [settingsOpen, setSettingsOpen] = useState(false);
   const [editingHabit, setEditingHabit] = useState<Habit | null>(null);
