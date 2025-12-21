@@ -449,6 +449,19 @@ export const translations = {
     avgPerDay: 'В среднем/день',
     topTask: 'Топ задача',
     pause: 'Пауза',
+    
+    // Notifications
+    habitsReminder: 'Привычки на сегодня',
+    habitsToComplete: 'привычек ждут выполнения',
+    streakCelebration: 'Отличная серия!',
+    longestStreak: 'Лучшая серия',
+    days: 'дней',
+    dataSynced: 'Данные синхронизированы',
+    syncSuccess: 'Все данные успешно сохранены в облако',
+    syncError: 'Ошибка синхронизации',
+    syncFailed: 'Не удалось синхронизировать данные',
+    syncData: 'Синхронизировать',
+    lastSync: 'Последняя синхронизация',
   },
   en: {
     // Pomodoro time tracking
@@ -898,6 +911,19 @@ export const translations = {
     avgPerDay: 'Avg/day',
     topTask: 'Top task',
     pause: 'Pause',
+    
+    // Notifications
+    habitsReminder: 'Habits for today',
+    habitsToComplete: 'habits waiting to be completed',
+    streakCelebration: 'Great streak!',
+    longestStreak: 'Longest streak',
+    days: 'days',
+    dataSynced: 'Data synced',
+    syncSuccess: 'All data saved to cloud',
+    syncError: 'Sync error',
+    syncFailed: 'Failed to sync data',
+    syncData: 'Sync',
+    lastSync: 'Last sync',
   },
   es: {
     // Pomodoro time tracking
@@ -1347,6 +1373,19 @@ export const translations = {
     avgPerDay: 'Prom/día',
     topTask: 'Tarea principal',
     pause: 'Pausa',
+    
+    // Notifications
+    habitsReminder: 'Hábitos para hoy',
+    habitsToComplete: 'hábitos esperando ser completados',
+    streakCelebration: '¡Gran racha!',
+    longestStreak: 'Mejor racha',
+    days: 'días',
+    dataSynced: 'Datos sincronizados',
+    syncSuccess: 'Todos los datos guardados en la nube',
+    syncError: 'Error de sincronización',
+    syncFailed: 'No se pudieron sincronizar los datos',
+    syncData: 'Sincronizar',
+    lastSync: 'Última sincronización',
   },
 } as const;
 
