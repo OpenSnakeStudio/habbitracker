@@ -13,10 +13,12 @@ import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 import { ScrollArea } from '@/components/ui/scroll-area';
 
+import type { LegalDocumentType } from '@/hooks/useLegalDocuments';
+
 interface LegalDocumentDialogProps {
   open: boolean;
   onOpenChange: (open: boolean) => void;
-  documentType: 'terms' | 'privacy' | 'data_processing';
+  documentType: LegalDocumentType;
 }
 
 export function LegalDocumentDialog({ open, onOpenChange, documentType }: LegalDocumentDialogProps) {
@@ -50,10 +52,12 @@ export function LegalDocumentDialog({ open, onOpenChange, documentType }: LegalD
     setIsEditing(false);
   };
 
-  const titles: Record<string, string> = {
+  const titles: Record<LegalDocumentType, string> = {
     terms: t('termsOfService'),
     privacy: t('privacyPolicy'),
     data_processing: t('dataProcessingPolicy'),
+    public_offer: t('publicOffer'),
+    help_support: t('helpAndSupport'),
   };
 
   // Simple markdown to HTML renderer
