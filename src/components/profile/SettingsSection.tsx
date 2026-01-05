@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Settings, Bell, Globe, Info, FileText, Shield, Lock, ChevronRight } from 'lucide-react';
+import { Settings, Bell, Globe, Info, FileText, Shield, Lock, ChevronRight, HelpCircle, ScrollText } from 'lucide-react';
 import { NotificationSettings } from '@/components/NotificationSettings';
 import { LanguageSelector } from '@/components/LanguageSelector';
 import { LegalDocumentDialog } from './LegalDocumentDialog';
@@ -12,15 +12,16 @@ import {
   CollapsibleContent,
   CollapsibleTrigger,
 } from '@/components/ui/collapsible';
+import type { LegalDocumentType } from '@/hooks/useLegalDocuments';
 
 export function SettingsSection() {
   const { t } = useTranslation();
   const [legalDialogOpen, setLegalDialogOpen] = useState(false);
-  const [legalDocType, setLegalDocType] = useState<'terms' | 'privacy' | 'data_processing'>('terms');
+  const [legalDocType, setLegalDocType] = useState<LegalDocumentType>('terms');
   const [permissionsDialogOpen, setPermissionsDialogOpen] = useState(false);
   const [settingsOpen, setSettingsOpen] = useState(true);
 
-  const openLegalDoc = (type: 'terms' | 'privacy' | 'data_processing') => {
+  const openLegalDoc = (type: LegalDocumentType) => {
     setLegalDocType(type);
     setLegalDialogOpen(true);
   };
@@ -108,6 +109,30 @@ export function SettingsSection() {
               <div className="flex items-center gap-3">
                 <Lock className="w-5 h-5 text-muted-foreground" />
                 <span className="text-sm font-medium">{t('dataProcessingPolicy')}</span>
+              </div>
+              <ChevronRight className="w-4 h-4 text-muted-foreground" />
+            </Button>
+
+            <Button
+              variant="ghost"
+              className="w-full justify-between p-4 h-auto rounded-none border-b border-border"
+              onClick={() => openLegalDoc('public_offer')}
+            >
+              <div className="flex items-center gap-3">
+                <ScrollText className="w-5 h-5 text-muted-foreground" />
+                <span className="text-sm font-medium">{t('publicOffer')}</span>
+              </div>
+              <ChevronRight className="w-4 h-4 text-muted-foreground" />
+            </Button>
+
+            <Button
+              variant="ghost"
+              className="w-full justify-between p-4 h-auto rounded-none border-b border-border"
+              onClick={() => openLegalDoc('help_support')}
+            >
+              <div className="flex items-center gap-3">
+                <HelpCircle className="w-5 h-5 text-muted-foreground" />
+                <span className="text-sm font-medium">{t('helpAndSupport')}</span>
               </div>
               <ChevronRight className="w-4 h-4 text-muted-foreground" />
             </Button>
