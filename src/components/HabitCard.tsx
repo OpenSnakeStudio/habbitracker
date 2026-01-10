@@ -1,10 +1,11 @@
 import { motion } from 'framer-motion';
-import { Check, MoreVertical, Flame, Tag } from 'lucide-react';
+import { Check, MoreVertical, Flame, Tag, Timer } from 'lucide-react';
 import { Habit } from '@/types/habit';
 import { ProgressRing } from './ProgressRing';
 import { getTodayString, getWeekDates } from '@/hooks/useHabits';
 import { useTranslation } from '@/contexts/LanguageContext';
 import { useUserTags } from '@/hooks/useUserTags';
+import { usePomodoro } from '@/contexts/PomodoroContext';
 import { TranslationKey } from '@/i18n/translations';
 import {
   DropdownMenu,
@@ -15,6 +16,7 @@ import {
 import { Button } from '@/components/ui/button';
 import { HabitDetailDialog } from './HabitDetailDialog';
 import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 interface HabitCardProps {
   habit: Habit;
@@ -33,7 +35,11 @@ export function HabitCard({ habit, onToggle, onEdit, onDelete, index, onTagClick
   const isCompletedToday = habit.completedDates.includes(today);
   const { t } = useTranslation();
   const { tags: userTags } = useUserTags();
+  const { start: startPomodoro, isRunning, currentHabitId } = usePomodoro();
+  const navigate = useNavigate();
   const [detailOpen, setDetailOpen] = useState(false);
+  
+  const isCurrentHabitRunning = isRunning && currentHabitId === habit.id;
   
   const weekProgress = weekDates.filter(date => {
     const dayOfWeek = new Date(date).getDay();
@@ -126,6 +132,24 @@ export function HabitCard({ habit, onToggle, onEdit, onDelete, index, onTagClick
               </div>
             )}
           </div>
+
+          {/* Pomodoro button */}
+          <Button
+            variant={isCurrentHabitRunning ? "default" : "outline"}
+            size="icon"
+            className="h-10 w-10"
+            onClick={(e) => {
+              e.stopPropagation();
+              if (isCurrentHabitRunning) {
+                navigate('/services');
+              } else {
+                startPomodoro(undefined, undefined, habit.id);
+                navigate('/services');
+              }
+            }}
+          >
+            <Timer className={`w-4 h-4 ${isCurrentHabitRunning ? 'animate-pulse' : ''}`} />
+          </Button>
 
           {/* Progress ring */}
           <ProgressRing progress={progressPercent} size={48} strokeWidth={4} color={habit.color}>
