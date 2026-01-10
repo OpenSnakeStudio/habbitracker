@@ -4,10 +4,12 @@ import { useLeaderboard, PublicProfile } from '@/hooks/useLeaderboard';
 import { useAchievementsFeed } from '@/hooks/useAchievementsFeed';
 import { useStars } from '@/hooks/useStars';
 import { useAuth } from '@/hooks/useAuth';
+import { useRewardsShop } from '@/hooks/useRewardsShop';
 import { AppHeader } from '@/components/AppHeader';
 import { AchievementPublishDialog } from '@/components/AchievementPublishDialog';
 import { PublicProfileEditDialog } from '@/components/profile/PublicProfileEditDialog';
 import { ContactsGatedDialog } from '@/components/profile/ContactsGatedDialog';
+import { RewardsShopTab } from '@/components/rewards/RewardsShopTab';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
@@ -17,7 +19,7 @@ import { Skeleton } from '@/components/ui/skeleton';
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog';
 import { ScrollArea } from '@/components/ui/scroll-area';
 import { Textarea } from '@/components/ui/textarea';
-import { Trophy, Star, Flame, ThumbsUp, ThumbsDown, MessageCircle, Send, Crown, Medal, Award, User, Plus, Settings, Phone } from 'lucide-react';
+import { Trophy, Star, Flame, ThumbsUp, ThumbsDown, MessageCircle, Send, Crown, Medal, Award, User, Plus, Settings, Phone, ShoppingBag } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { format } from 'date-fns';
 import { ru } from 'date-fns/locale';
@@ -39,8 +41,9 @@ export default function Rating() {
     dailyLimit
   } = useAchievementsFeed();
   const { userStars } = useStars();
+  const { rewards, purchasedRewards, loading: rewardsLoading, userStars: shopStars, purchaseReward, useReward, getUnusedRewards } = useRewardsShop();
 
-  const [activeTab, setActiveTab] = useState<'leaderboard' | 'feed'>('leaderboard');
+  const [activeTab, setActiveTab] = useState<'leaderboard' | 'feed' | 'rewards'>('leaderboard');
   const [selectedProfile, setSelectedProfile] = useState<PublicProfile | null>(null);
   const [profileLoading, setProfileLoading] = useState(false);
   const [selectedPost, setSelectedPost] = useState<string | null>(null);
@@ -125,7 +128,7 @@ export default function Rating() {
         </div>
 
         <Tabs value={activeTab} onValueChange={(v) => setActiveTab(v as any)}>
-          <TabsList className="grid w-full grid-cols-2 mb-6">
+          <TabsList className="grid w-full grid-cols-3 mb-6">
             <TabsTrigger value="leaderboard" className="flex items-center gap-2">
               <Trophy className="h-4 w-4" />
               {isRussian ? 'ТОП-100' : 'TOP-100'}
@@ -133,6 +136,10 @@ export default function Rating() {
             <TabsTrigger value="feed" className="flex items-center gap-2">
               <Star className="h-4 w-4" />
               {isRussian ? 'Лента' : 'Feed'}
+            </TabsTrigger>
+            <TabsTrigger value="rewards" className="flex items-center gap-2">
+              <ShoppingBag className="h-4 w-4" />
+              {isRussian ? 'Награды' : 'Rewards'}
             </TabsTrigger>
           </TabsList>
 
@@ -385,6 +392,18 @@ export default function Rating() {
                 )}
               </div>
             )}
+          </TabsContent>
+
+          <TabsContent value="rewards">
+            <RewardsShopTab
+              rewards={rewards}
+              purchasedRewards={purchasedRewards}
+              loading={rewardsLoading}
+              userStars={shopStars}
+              purchaseReward={purchaseReward}
+              useReward={useReward}
+              getUnusedRewards={getUnusedRewards}
+            />
           </TabsContent>
         </Tabs>
       </main>
